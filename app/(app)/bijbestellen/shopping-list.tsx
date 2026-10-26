@@ -42,7 +42,7 @@ function tidy(raw: string) {
 
 type Props = {
   householdId: string;
-  householdName: string;
+  title: string;
   userId: string;
   initialItems: Item[];
   suggestions: string[];
@@ -51,7 +51,7 @@ type Props = {
 
 export function ShoppingList({
   householdId,
-  householdName,
+  title,
   userId,
   initialItems,
   suggestions,
@@ -276,9 +276,9 @@ export function ShoppingList({
   const todo = items.filter((i) => !i.checked).length;
 
   let status: string;
-  if (items.length === 0) status = "De lijst is leeg";
+  if (items.length === 0) status = "Niets bij te bestellen";
   else if (todo === 0) status = "Alles ligt in het mandje";
-  else status = todo === 1 ? "Nog 1 ding te halen" : `Nog ${todo} dingen te halen`;
+  else status = todo === 1 ? "1 ding moet erbij" : `${todo} dingen moeten erbij`;
 
   function author(item: Item) {
     if (!showAuthor || !item.added_by || item.added_by === userId) return null;
@@ -288,7 +288,7 @@ export function ShoppingList({
   return (
     <div className="list-page">
       <header className="page-head">
-        <h1 className="page-title">{householdName}</h1>
+        <h1 className="page-title">{title}</h1>
         <p className="page-status">
           {status}
           <span
@@ -303,13 +303,13 @@ export function ShoppingList({
 
       <form className="add" onSubmit={onSubmit}>
         <label className="sr-only" htmlFor="new-item">
-          Wat moet er in huis?
+          Wat moet er bij?
         </label>
         <input
           id="new-item"
           ref={inputRef}
           className="input add-name"
-          placeholder="Wat moet er in huis?"
+          placeholder="Wat moet er bij?"
           value={name}
           onChange={(e) => setName(e.target.value)}
           autoComplete="off"
@@ -376,7 +376,7 @@ export function ShoppingList({
         <p className="empty">
           {basket.length > 0
             ? "Alles is afgevinkt. Leeg het mandje als je thuis bent."
-            : "Typ hierboven wat er op moet, of tik op iets dat je vaak koopt."}
+            : "Wat in de voorraad op raakt, komt hier vanzelf te staan. Je kunt ook zelf iets toevoegen."}
         </p>
       )}
 

@@ -1,48 +1,41 @@
-import { getMembers, requireHousehold } from "@/lib/household";
-import { ShoppingList, type Item } from "./shopping-list";
+import { requireHousehold } from "@/lib/household";
+import { todayInAmsterdam } from "@/lib/dates";
+import { STOCK_COLUMNS, type Location, type PicnicLink, type StockItem } from "@/lib/stock";
+import { Inventory, type PendingDelivery } from "./inventory";
 
-function frequentNames(rows: { name: string }[], limit = 10): string[] {
-  const counts = new Map<string, { name: string; count: number }>();
-  for (const { name } of rows) {
-    const key = name.trim().toLowerCase();
-    const entry = counts.get(key);
-    if (entry) entry.count += 1;
-    else counts.set(key, { name: name.trim(), count: 1 });
-  }
-  return [...counts.values()]
-    .sort((a, b) => b.count - a.count)
-    .slice(0, limit)
-    .map((e) => e.name);
-}
+export default async function StockPage() {
+  const { supabase, household } = await requireHousehold();
 
-export default async function ListPage() {
-  const { supabase, user, household } = await requireHousehold();
-
-  const [{ data: items }, { data: history }, members] = await Promise.all([
+  const [{ data: locations }, { data: items }, { data: pending }, { data: link }] = await Promise.all([
     supabase
-      .from("shopping_items")
-      .select("id, name, quantity, checked, added_by, created_at")
+      .from("locations")
+      .select("id, name, sort_order")
       .eq("household_id", household.id)
-      .is("archived_at", null)
-      .order("created_at", { ascending: true }),
+      .order("sort_order", { ascending: true })
+      .order("name", { ascending: true }),
+    supabase.from("stock_items").select(STOCK_COLUMNS).eq("household_id", household.id),
     supabase
-      .from("shopping_items")
-      .select("name")
+      .from("picnic_deliveries")
+      .select("id, delivered_at, item_count")
       .eq("household_id", household.id)
-      .not("archived_at", "is", null)
-      .order("archived_at", { ascending: false })
-      .limit(300),
-    getMembers(supabase, household.id),
+      .eq("status", "pending")
+      .order("delivered_at", { ascending: false }),
+    supabase
+      .from("picnic_links")
+      .select("status, account_email, last_sync_at, last_error, next_delivery")
+      .eq("household_id", household.id)
+      .maybeSingle(),
   ]);
 
   return (
-    <ShoppingList
+    <Inventory
       householdId={household.id}
       householdName={household.name}
-      userId={user.id}
-      initialItems={(items ?? []) as Item[]}
-      suggestions={frequentNames((history ?? []) as { name: string }[])}
-      members={members}
+      today={todayInAmsterdam()}
+      locations={(locations ?? []) as Location[]}
+      initialItems={(items ?? []) as StockItem[]}
+      pendingDeliveries={(pending ?? []) as PendingDelivery[]}
+      picnic={(link ?? null) as PicnicLink | null}
     />
   );
 }

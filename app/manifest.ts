@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Boodschappen",
     short_name: "Boodschappen",
-    description: "De gedeelde boodschappenlijst en het weekmenu voor iedereen in huis.",
+    description: "Voorraad, bijbestellen en weekmenu voor iedereen in huis.",
     lang: "nl",
     start_url: "/",
     scope: "/",

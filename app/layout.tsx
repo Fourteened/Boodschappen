@@ -11,7 +11,7 @@ const sans = Bricolage_Grotesque({
 
 export const metadata: Metadata = {
   title: "Boodschappen",
-  description: "De gedeelde boodschappenlijst en het weekmenu voor iedereen in huis.",
+  description: "Voorraad, bijbestellen en weekmenu voor iedereen in huis.",
   applicationName: "Boodschappen",
   appleWebApp: {
     capable: true,

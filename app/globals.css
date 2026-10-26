@@ -114,7 +114,7 @@ button {
   inset: auto 0 0 0;
   z-index: 10;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   height: calc(var(--nav-height) + env(safe-area-inset-bottom));
   padding-bottom: env(safe-area-inset-bottom);
   background: var(--surface);
@@ -766,6 +766,428 @@ button {
 .welcome .btn-secondary {
   align-self: flex-start;
   margin-top: 24px;
+}
+
+/* ---------- Stock ---------- */
+
+select.input {
+  appearance: none;
+  padding-right: 36px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%235e6b62' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+}
+
+.syncing {
+  color: var(--sage);
+  font-size: 13.5px;
+}
+
+.picnic-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding: 14px 14px 14px 16px;
+  border-radius: 16px;
+  background: var(--leaf-soft);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.picnic-card-text {
+  display: grid;
+  gap: 2px;
+}
+
+.picnic-card-title {
+  font-weight: 700;
+}
+
+.picnic-card-sub {
+  color: var(--sage);
+  font-size: 15px;
+}
+
+.picnic-card-btn {
+  flex: none;
+  min-height: 44px;
+  padding: 0 16px;
+}
+
+.next-delivery {
+  margin-bottom: 14px;
+  color: var(--sage);
+  font-size: 15px;
+}
+
+.stock-tools {
+  display: grid;
+  grid-template-columns: 1fr 50px;
+  gap: 8px;
+}
+
+.place-filter {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  margin: 12px calc(var(--gutter) * -1) 0;
+  padding: 0 var(--gutter) 4px;
+  scrollbar-width: none;
+}
+
+.place-filter::-webkit-scrollbar {
+  display: none;
+}
+
+.place-chip {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 38px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1.5px var(--line);
+  font-size: 15px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.place-chip[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: none;
+}
+
+.place-chip-count {
+  font-size: 13px;
+  opacity: 0.7;
+  font-variant-numeric: tabular-nums;
+}
+
+.stock-section {
+  margin-top: 26px;
+}
+
+.stock-soon {
+  padding: 14px 14px 4px;
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1.5px var(--line);
+}
+
+.stock-soon .stock-list .stock-row:last-child {
+  border-bottom: 0;
+}
+
+.stock-list {
+  margin-top: 8px;
+}
+
+.stock-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.stock-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 62px;
+  padding: 8px 0;
+  border: 0;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.stock-img {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--surface);
+  object-fit: contain;
+}
+
+.stock-img-empty {
+  display: grid;
+  place-items: center;
+  background: var(--leaf-soft);
+  color: var(--leaf);
+  font-weight: 800;
+}
+
+.stock-text {
+  min-width: 0;
+  display: grid;
+  gap: 1px;
+}
+
+.stock-name {
+  overflow-wrap: anywhere;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.stock-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 10px;
+  color: var(--sage);
+  font-size: 13.5px;
+}
+
+.tht {
+  font-weight: 600;
+}
+
+.tht-soon {
+  color: #8a5a00;
+}
+
+.tht-past {
+  color: var(--danger);
+}
+
+@media (prefers-color-scheme: dark) {
+  .tht-soon {
+    color: #e7c35a;
+  }
+}
+
+.stepper {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radius-pill);
+  box-shadow: inset 0 0 0 1.5px var(--line);
+  background: var(--surface);
+}
+
+.stepper button {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--leaf);
+  cursor: pointer;
+}
+
+.stepper-value {
+  min-width: 22px;
+  text-align: center;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.stepper-large {
+  justify-content: space-between;
+  min-height: 50px;
+  border-radius: var(--radius-field);
+}
+
+.stepper-large button {
+  width: 48px;
+  height: 48px;
+}
+
+/* Bottom sheet for adding and editing */
+.sheet {
+  width: 100%;
+  max-width: 560px;
+  max-height: calc(100dvh - 40px);
+  margin: auto auto 0;
+  padding: 0;
+  border: 0;
+  border-radius: 22px 22px 0 0;
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.sheet::backdrop {
+  background: rgb(25 20 31 / 0.45);
+}
+
+@media (min-width: 640px) {
+  .sheet {
+    margin: auto;
+    border-radius: 22px;
+  }
+}
+
+.sheet-form {
+  display: grid;
+  gap: 14px;
+  padding: 22px var(--gutter) calc(env(safe-area-inset-bottom) + 18px);
+}
+
+.sheet-title {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  overflow-wrap: anywhere;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.sheet-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.sheet-more {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.btn-danger {
+  color: var(--danger);
+}
+
+/* Putting a Picnic delivery away */
+.putaway-list {
+  border-top: 1px solid var(--line);
+}
+
+.putaway-row {
+  display: grid;
+  gap: 10px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.putaway-row.is-skipped .putaway-head {
+  opacity: 0.5;
+}
+
+.putaway-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.putaway-img {
+  width: 48px;
+  height: 48px;
+}
+
+.putaway-text {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+}
+
+.putaway-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 60px;
+}
+
+.putaway-select {
+  flex: 1;
+  min-height: 44px;
+  font-size: 16px;
+}
+
+.putaway-date {
+  flex: 1;
+  min-height: 44px;
+  font-size: 16px;
+}
+
+.putaway-bar {
+  position: sticky;
+  bottom: calc(var(--nav-height) + env(safe-area-inset-bottom) + 8px);
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  margin-top: 18px;
+  padding: 12px;
+  border-radius: 18px;
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1.5px var(--line), 0 8px 24px rgb(25 20 31 / 0.12);
+}
+
+/* House page helpers */
+.stack-tight {
+  display: grid;
+  gap: 12px;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.places {
+  border-top: 1px solid var(--line);
+}
+
+.place {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 56px;
+  border-bottom: 1px solid var(--line);
+}
+
+.place-input {
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0 10px;
+  margin-left: -10px;
+  border: 1.5px solid transparent;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-weight: 600;
+}
+
+.place-input:hover {
+  border-color: var(--line);
+}
+
+.place-input:focus-visible {
+  outline: none;
+  border-color: var(--leaf);
+  background: var(--surface);
+}
+
+.place-count {
+  color: var(--sage);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.place-add {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
 }
 
 /* ---------- Motion preferences ---------- */

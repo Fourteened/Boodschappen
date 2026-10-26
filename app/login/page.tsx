@@ -17,15 +17,15 @@ export default async function LoginPage({
   return (
     <main className="login">
       <div className="login-note" aria-hidden="true">
-        <span>Melk</span>
-        <span className="is-done">Prei</span>
-        <span>Koffiebonen</span>
-        <span className="is-done">Appels</span>
+        <span>Koelkast</span>
+        <span>Melk 2</span>
+        <span className="is-done">Yoghurt</span>
+        <span>Eieren 6</span>
       </div>
 
-      <h1 className="login-title">Samen boodschappen doen</h1>
+      <h1 className="login-title">Weet wat er in huis is</h1>
       <p className="login-lead">
-        Eén lijst voor iedereen in huis. Wat de één afvinkt in de winkel, ziet de ander meteen.
+        Je voorraad per plek, met wat er eerst op moet. Picnic-bestellingen komen er na bezorging vanzelf bij.
       </p>
 
       {fout ? (

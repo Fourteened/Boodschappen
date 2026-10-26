@@ -1,10 +1,32 @@
 import { headers } from "next/headers";
 import { getMembers, requireHousehold } from "@/lib/household";
+import type { Location, PicnicLink } from "@/lib/stock";
 import { InviteLink } from "./invite-link";
+import { LocationsEditor } from "./locations-editor";
+import { PicnicConnect } from "./picnic-connect";
 
 export default async function HousePage() {
   const { supabase, user, household } = await requireHousehold();
-  const members = await getMembers(supabase, household.id);
+
+  const [members, { data: locations }, { data: stock }, { data: link }] = await Promise.all([
+    getMembers(supabase, household.id),
+    supabase
+      .from("locations")
+      .select("id, name, sort_order")
+      .eq("household_id", household.id)
+      .order("sort_order", { ascending: true }),
+    supabase.from("stock_items").select("location_id").eq("household_id", household.id),
+    supabase
+      .from("picnic_links")
+      .select("status, account_email, last_sync_at, last_error, next_delivery")
+      .eq("household_id", household.id)
+      .maybeSingle(),
+  ]);
+
+  const counts: Record<string, number> = {};
+  for (const row of (stock ?? []) as { location_id: string | null }[]) {
+    if (row.location_id) counts[row.location_id] = (counts[row.location_id] ?? 0) + 1;
+  }
 
   const h = await headers();
   const host = h.get("x-forwarded-host") ?? h.get("host") ?? "";
@@ -19,6 +41,24 @@ export default async function HousePage() {
           {members.length === 1 ? "Alleen jij, voor nu" : `${members.length} mensen in dit huishouden`}
         </p>
       </header>
+
+      <section className="stack" aria-labelledby="picnic-title">
+        <h2 id="picnic-title" className="section-title">
+          Picnic
+        </h2>
+        <PicnicConnect householdId={household.id} link={(link ?? null) as PicnicLink | null} />
+      </section>
+
+      <section className="stack" aria-labelledby="places-title">
+        <h2 id="places-title" className="section-title">
+          Plekken in huis
+        </h2>
+        <LocationsEditor
+          householdId={household.id}
+          initialLocations={(locations ?? []) as Location[]}
+          counts={counts}
+        />
+      </section>
 
       <section className="stack" aria-labelledby="members-title">
         <h2 id="members-title" className="section-title">
@@ -45,7 +85,7 @@ export default async function HousePage() {
           Huisgenoot uitnodigen
         </h2>
         <p className="lead">
-          Stuur deze link. Na het inloggen met Microsoft staat diegene meteen in jullie lijst.
+          Stuur deze link. Na het inloggen met Microsoft ziet diegene meteen jullie voorraad.
         </p>
         <InviteLink url={inviteUrl} code={household.invite_code} />
       </section>

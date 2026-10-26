@@ -6,10 +6,18 @@ import { usePathname } from "next/navigation";
 const TABS = [
   {
     href: "/",
-    label: "Lijst",
+    label: "Voorraad",
     icon: (
-      <path d="M8 6h12M8 12h12M8 18h12M3.5 6h.01M3.5 12h.01M3.5 18h.01" />
+      <>
+        <rect x="3.5" y="3" width="17" height="18" rx="2.5" />
+        <path d="M3.5 9.5h17M3.5 15h17M9 6.5h6" />
+      </>
     ),
+  },
+  {
+    href: "/bijbestellen",
+    label: "Bijbestellen",
+    icon: <path d="M8 6h12M8 12h12M8 18h12M3.5 6h.01M3.5 12h.01M3.5 18h.01" />,
   },
   {
     href: "/weekmenu",
@@ -34,7 +42,10 @@ export function BottomNav() {
   return (
     <nav className="bottom-nav" aria-label="Hoofdmenu">
       {TABS.map((tab) => {
-        const active = tab.href === "/" ? pathname === "/" : pathname.startsWith(tab.href);
+        const active =
+          tab.href === "/"
+            ? pathname === "/" || pathname.startsWith("/picnic")
+            : pathname.startsWith(tab.href);
         return (
           <Link
             key={tab.href}
