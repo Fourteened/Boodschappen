@@ -20,5 +20,9 @@ export async function GET(request: Request) {
     }
   }
 
-  return NextResponse.redirect(`${origin}/login?fout=inloggen`);
+  // Pass the provider's reason along so the login page can show what went wrong.
+  const reason = searchParams.get("error_description") ?? searchParams.get("error") ?? "inloggen";
+  const target = new URL("/login", origin);
+  target.searchParams.set("fout", reason.slice(0, 300));
+  return NextResponse.redirect(target);
 }

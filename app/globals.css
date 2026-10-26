@@ -298,6 +298,12 @@ button {
   color: var(--danger);
 }
 
+.notice-detail {
+  margin-top: 6px;
+  font-size: 13.5px;
+  overflow-wrap: anywhere;
+}
+
 .field {
   display: grid;
   gap: 6px;

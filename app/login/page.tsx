@@ -29,10 +29,10 @@ export default async function LoginPage({
       </p>
 
       {fout ? (
-        <p className="notice notice-error" role="alert">
-          Inloggen is niet gelukt. Probeer het opnieuw; blijft het misgaan, controleer dan of Microsoft-login
-          in Supabase aan staat.
-        </p>
+        <div className="notice notice-error" role="alert">
+          <p>Inloggen is niet gelukt. Probeer het opnieuw.</p>
+          {fout !== "inloggen" ? <p className="notice-detail">Melding van Microsoft: {fout}</p> : null}
+        </div>
       ) : null}
 
       <LoginButton next={next} />
